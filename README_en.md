@@ -14,7 +14,7 @@ The CCDX WIFI LOGIN aims to offer users a more convenient way to connect and log
 
 - **Automatic Connection**: Automatically searches for and connects to the `CCDX-WIFI` signal, saving users the trouble of manually searching for and selecting the network.
 - **Auto-Login**: Achieves automatic login functionality, freeing users from the need to manually open a browser and enter their account information.
-- **Memory Function**: Users only need to enter their username and password once, and the tool will remember the login credentials, making subsequent logins faster and more convenient.
+- **Memory Function**: Users only need to enter their username and password once when the program is first launched; this tool can remember the login credentials, making subsequent logins faster and more convenient.
 
 ## Project Origin
 

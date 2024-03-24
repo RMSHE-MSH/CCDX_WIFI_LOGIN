@@ -26,7 +26,17 @@
 #include "CSV_Operations.hpp"
 #include "WiFiConnector.hpp"
 
+ // 显示版本信息
+static void displayInfo() {
+    std::cout << "CCDX WIFI LOGIN - Dev.2024.03.24" << std::endl;
+    std::cout << "[AuthorInfo] Powered by RMSHE" << std::endl;
+    std::cout << "[OpenSource] https://github.com/RMSHE-MSH/CCDX_WIFI_LOGIN" << std::endl;
+    std::cout << "[LICENSE] GNU AFFERO GENERAL PUBLIC LICENSE Version 3\n\n" << std::endl;
+}
+
 int main() {
+    displayInfo();
+
     CSV_Operations csv_op;
 
     // Windows系统中连接到CCDX-WIFI信号;
@@ -44,7 +54,7 @@ int main() {
 
         // 如果账户信息为空，则提示用户输入并保存到CSV文件中
         if (accountInfo.empty()) {
-            std::cout << "[未设置账号信息] 您只需要输入一次用户名和密码我们便可永久记住。\n" << std::endl;
+            std::cout << "[未设置账号信息] 您只需在程序首次启动时输入一次用户名和密码即可。\n" << std::endl;
 
             std::string username, password;
 
