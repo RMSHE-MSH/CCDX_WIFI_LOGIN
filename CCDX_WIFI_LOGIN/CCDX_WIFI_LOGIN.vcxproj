@@ -141,6 +141,7 @@
     <ClInclude Include="CSV_Operations.hpp" />
     <ClInclude Include="RivestCipher4.hpp" />
     <ClInclude Include="WebRequests.hpp" />
+    <ClInclude Include="WiFiConnector.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

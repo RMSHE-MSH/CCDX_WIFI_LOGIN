@@ -22,12 +22,21 @@
  * Electronic Mail : asdfghjkl851@outlook.com
  */
 
-#include <iostream>
 #include "WebRequests.hpp"
 #include "CSV_Operations.hpp"
+#include "WiFiConnector.hpp"
 
 int main() {
     CSV_Operations csv_op;
+
+    // Windows系统中连接到CCDX-WIFI信号;
+    try {
+        WiFiConnector connector;
+        // connector.Connect(L"MySSID", L"MyPassword"); // 连接到需要密码的WIFI
+        connector.Connect(L"ccdx-wifi"); // 连接到公共WIFI
+    } catch (const std::runtime_error &e) {
+        std::wcerr << L"出现错误: " << e.what() << std::endl;
+    }
 
     while (true) {
         // 从CSV文件读取账户信息
