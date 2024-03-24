@@ -66,6 +66,31 @@ public:
         }
     }
 
+    // 检查Windows系统是否已经连接到指定SSID的WIFI: true表示已连接到指定SSID的WIFI；如果不匹配或查询失败，则返回false;
+    bool IsConnectedToSSID(const std::wstring &targetSSID) {
+        WLAN_CONNECTION_ATTRIBUTES *pConnectInfo = nullptr;
+        DWORD dwDataSize = 0;
+        DWORD dwError = WlanQueryInterface(hClient, &pInterfaceInfo->InterfaceGuid,
+                                           wlan_intf_opcode_current_connection, NULL,
+                                           &dwDataSize, (void **)&pConnectInfo, NULL);
+        if (dwError != ERROR_SUCCESS) {
+            // 查询接口失败
+            return false;
+        }
+
+        // 使用辅助函数获取当前连接的SSID字符串
+        std::wstring currentSSID = SSIDToString(pConnectInfo->wlanAssociationAttributes.dot11Ssid.ucSSID,
+                                                pConnectInfo->wlanAssociationAttributes.dot11Ssid.uSSIDLength);
+
+        // 检查SSID是否匹配
+        bool isConnected = (currentSSID == targetSSID);
+
+        // 释放查询到的内存
+        WlanFreeMemory(pConnectInfo);
+
+        return isConnected;
+    }
+
 private:
     HANDLE hClient = NULL;
     DWORD dwNegotiatedVersion;
@@ -89,5 +114,16 @@ private:
             securityXml + L"</security></MSM></WLANProfile>";
 
         return profileXml;
+    }
+
+    // 将SSID的字节序列转换为wstring
+    std::wstring SSIDToString(const UCHAR *ssid, ULONG ssidLength) {
+        std::wstring ssidStr;
+        for (ULONG i = 0; i < ssidLength; ++i) {
+            if (ssid[i] != '\0') { // 忽略空字符
+                ssidStr += static_cast<wchar_t>(ssid[i]);
+            }
+        }
+        return ssidStr;
     }
 };

@@ -42,10 +42,19 @@ int main() {
     // Windows系统中连接到CCDX-WIFI信号;
     try {
         WiFiConnector connector;
-        // connector.Connect(L"MySSID", L"MyPassword"); // 连接到需要密码的WIFI
-        connector.Connect(L"ccdx-wifi"); // 连接到公共WIFI
+
+        // 检查Windows系统是否已经连接到指定SSID的WIFI, 如果没有连接到CCDX-FIFI, 则立刻进行连接操作;
+        if (!connector.IsConnectedToSSID(L"ccdx-wifi")) {
+            // connector.Connect(L"MySSID", L"MyPassword"); // 连接到需要密码的WIFI
+            connector.Connect(L"ccdx-wifi"); // 连接到公共WIFI
+
+            // 延时一段时间(在连接到WIFI后浏览器会自动访问登录页面,如果这时候立刻发送登录请求有可能会导致登录失败, 所以这里必须延迟一段时间)
+            std::this_thread::sleep_for(std::chrono::milliseconds(3000));
+        }
     } catch (const std::runtime_error &e) {
         std::wcerr << L"出现错误: " << e.what() << std::endl;
+
+        system("pause");
     }
 
     while (true) {
